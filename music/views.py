@@ -1,17 +1,18 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Album
+from django.http import Http404
 
 
 # Create your views here.
 
 def index(request):
-    albums_in_db = Album.objects.all()
-
-    context = {'albums_in_db': albums_in_db}
-
-    return render(request, 'music/index.html', context)
+    albums_in_db = Album.objects.all() # Get all albums in the database
+    return render(request, 'music/index.html', {'albums_in_db': albums_in_db})
 
 
 def detail(request, album_id):
-    return HttpResponse("<h2>Details for album id: " + str(album_id) + " </h2>")
+    try:
+        album = Album.objects.get(id=album_id)
+    except Album.DoesNotExist:
+        raise Http404("The album with id " + album_id + " does not exist!")
+    return render(request, 'music/detail.html', {'album': album})

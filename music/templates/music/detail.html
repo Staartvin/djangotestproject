@@ -1,0 +1,15 @@
+<img src="{{ album.album_logo }}" style="max-width=400px; max-height: 400px;">
+
+<h1>'{{ album.album_title }}'</h1>
+<h3>by {{ album.artist }}</h3>
+
+{% if album.song_set.count > 1 %}
+<p>Songs:</p>
+<ul>
+    {% for song in album.song_set.all %}
+        <li>{{ song.song_title }} - {{ song.file_type }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>There are no songs in this album.</p>
+{% endif %}

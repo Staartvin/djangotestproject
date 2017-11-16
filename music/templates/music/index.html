@@ -1,13 +1,37 @@
-<h1>Albums in database</h1>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+      integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
-{% if albums_in_db %}
-    <ul>
-        {% for album in albums_in_db %}
-        <li>
-            <a href="/music/{{ album.id }}/">{{ album.album_title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-{% else  %}
-    <h3>There are no albums to display</h3>
-{% endif %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Albums in database</h1>
+            <div class="row display-flex">
+                {% if albums_in_db %}
+
+                    {% for album in albums_in_db %}
+                        <div class="col-md-4">
+                            <div class="thumbnail">
+                                <img class="img-responsive" style="max-width=400px; max-height: 400px;" alt="{{ album }}"
+                                     src="{{ album.album_logo }}"/>
+                                <div class="caption">
+                                    <h3>
+                                        {{ album }}
+                                    </h3>
+                                    <p>
+                                        Text to replace
+                                    </p>
+                                    <p>
+                                        <a class="btn btn-primary" href="{% url 'music:detail' album.id %}">View album</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                {% else %}
+                    <h3>There are no albums to display</h3>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

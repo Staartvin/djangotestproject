@@ -1,0 +1,13 @@
+<h1>Albums in database</h1>
+
+{% if albums_in_db %}
+    <ul>
+        {% for album in albums_in_db %}
+        <li>
+            <a href="/music/{{ album.id }}/">{{ album.album_title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+{% else  %}
+    <h3>There are no albums to display</h3>
+{% endif %}

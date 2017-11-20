@@ -1,15 +1,35 @@
-<img src="{{ album.album_logo }}" style="max-width=400px; max-height: 400px;">
+{% extends 'music/base.html' %}
+{% block title %}Details of '{{ album.album_title }}'{% endblock %}
 
-<h1>'{{ album.album_title }}'</h1>
-<h3>by {{ album.artist }}</h3>
+<!-- Put this block into the base.html body -->
+{% block body %}
 
-{% if album.song_set.count > 1 %}
-<p>Songs:</p>
-<ul>
-    {% for song in album.song_set.all %}
-        <li>{{ song.song_title }} - {{ song.file_type }}</li>
-    {% endfor %}
-</ul>
-{% else %}
-    <p>There are no songs in this album.</p>
-{% endif %}
+    <img src="{{ album.album_logo }}" style="max-width=400px; max-height: 400px;">
+
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+
+    <h1>'{{ album.album_title }}'</h1>
+    <h2>by {{ album.artist }}</h2>
+
+    {% if album.song_set.count > 1 %}
+        <h3>Songs:</h3>
+        <ul>
+
+            {% csrf_token %}
+
+            {% for song in album.song_set.all %}
+                <li>
+                    <label for="song{{ forloop.counter }}">
+                        {{ song.song_title }}
+                    </label><br>
+                </li>
+            {% endfor %}
+
+        </ul>
+    {% else %}
+        <p>There are no songs in this album.</p>
+    {% endif %}
+
+{% endblock %}
